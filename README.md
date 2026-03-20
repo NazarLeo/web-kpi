@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ЛАБОРАТОРНА РОБОТА №1
 
-## Getting Started
+## Тема
 
-First, run the development server:
+Створення проєкту на TypeScript, Next.js та Node.js (SSR)
+
+## Інформація про виконавця
+
+- **Виконав:** Леочко Назар
+- **Група:** ТР-32
+- **Дисципліна:** Веб-орієнтована розробка системи екологічного моніторингу
+
+---
+
+## 1. Мета роботи
+
+Розпрацювання веб-додатку для моніторингу якості повітря з використанням сучасних технологій стеку TypeScript, Next.js та Node.js із серверним рендерингом (SSR). Розробка RESTful API для роботи з даними про станції спостереження та забруднення.
+
+## 2. Завдання
+
+1. Налаштування проєкту з використанням Next.js та TypeScript
+2. Розробка структури компонентів та сторінок
+3. Створення API маршрутів для роботи з даними станцій і якості повітря
+4. Реалізація типізації даних для забезпечення типобезпеки
+5. Налаштування CSS та стилізації
+6. Реалізація утилітних функцій для обробки даних якості повітря
+
+## 3. Архітектура проєкту
+
+### 3.1 Структура каталогів
+
+```
+src/
+├── app/                          # Next.js App Router
+│   ├── page.tsx                  # Головна сторінка
+│   ├── about/page.tsx            # Сторінка "Про проект"
+│   ├── stations/                 # Сторінки для станцій
+│   ├── pollutants/               # Сторінка забруднювачів
+│   ├── api/                      # API маршрути
+│   │   ├── stations/
+│   │   │   ├── route.ts          # Отримання всіх станцій
+│   │   │   └── [id]/             # Динамічні маршрути для станцій
+│   │   └── statistics/route.ts
+│   └── globals.css
+├── components/                   # Переиспользуемые компоненты
+│   └── Header.tsx
+├── lib/                          # Утилітні функції
+│   ├── airQualityUtils.ts       # Обробка даних якості повітря
+│   └── mockData.ts              # Тестові дані
+└── types/                        # TypeScript типи
+    ├── airQuality.ts
+    ├── api.ts
+    ├── apiRequests.ts
+    ├── measurement.ts
+    ├── station.ts
+    └── index.ts
+```
+
+### 3.2 Основні технології
+
+- **Next.js 15+** - React фреймворк з SSR підтримкою
+- **TypeScript** - Для типобезпеки та детектування помилок на етапі розробки
+- **React 19** - Бібліотека для побудови UI
+- **Node.js** - Серверне середовище виконання
+- **PostCSS** - Постпроцесор CSS
+- **ESLint** - Лінтер для забезпечення якості коду
+
+## 4. Запуск проєкту
+
+### 4.1 Встановлення залежностей
+
+```bash
+npm install
+```
+
+### 4.2 Запуск сервера розробки
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Сервер буде доступний за адресою [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4.3 Команди для роботи
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Запуск сервера розробки
+- `npm run build` - Збірка проєкту для production
+- `npm run start` - Запуск збудованого проєкту
+- `npm run lint` - Перевірка коду лінтером
 
-## Learn More
+## 5. Основні компоненти та функціональність
 
-To learn more about Next.js, take a look at the following resources:
+### 5.1 API Маршрути
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **GET /api/stations** - Отримання списку всіх станцій
+- **GET /api/stations/[id]** - Отримання інформації про конкретну станцію
+- **GET /api/stations/[id]/air-quality** - Отримання даних якості повітря для станції
+- **GET /api/stations/[id]/historical** - Отримання історичних даних станції
+- **GET /api/statistics** - Отримання статистичних даних
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 5.2 Сторінки
 
-## Deploy on Vercel
+- **Головна сторінка** (`/`) - Вітальна сторінка додатку
+- **Про проект** (`/about`) - Інформація про проект
+- **Станції** (`/stations`) - Список всіх станцій спостереження
+- **Деталі станції** (`/stations/[id]`) - Детальна інформація про станцію
+- **Забруднювачі** (`/pollutants`) - Інформація про забруднювачі
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 6. Типізація даних
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Проект використовує строгу типізацію TypeScript. Основні tipos:
+
+- `Station` - Модель станції спостереження
+- `AirQuality` - Модель даних якості повітря
+- `Measurement` - Модель вимірювання
+- `Pollutant` - Модель забруднювача
+
+## 7. Висновки
+
+Розроблений проект демонструє:
+- Профільну роботу з сучасним React фреймворком (Next.js)
+- Використання TypeScript для забезпечення типобезпеки
+- Реалізацію серверного рендерингу (SSR) для оптимізації продуктивності
+- Розробку RESTful API на Node.js
+- Правильну організацію структури проєкту
+
+---
+
+**Дата виконання:** Березень 2026
