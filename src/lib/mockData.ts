@@ -212,27 +212,26 @@ export const mockStations: MonitoringStation[] = [
 /**
  * Короткі дані станцій для списків
  */
-export const mockStationsSummary: StationSummary[] = mockStations.map((station) => {
-  const levels: AirQualityLevel[] = [
-    AirQualityLevel.GOOD,
-    AirQualityLevel.MODERATE,
-    AirQualityLevel.UNHEALTHY_SENSITIVE,
-  ];
-  
-  const level = station.status === StationStatus.MAINTENANCE 
-    ? undefined 
-    : levels[Math.floor(Math.random() * levels.length)];
-  
-  return {
-    id: station.id,
-    name: station.name,
-    type: station.type,
-    status: station.status,
-    coordinates: station.coordinates,
-    city: station.address.city,
-    currentAQI: level ? generateAQI(level) : undefined,
-  };
-});
+// Фіксовані значення AQI — детерміновані, щоб уникнути hydration mismatch
+const fixedAQI: Record<string, number | undefined> = {
+  "station-kyiv-center": 78,
+  "station-kyiv-obolon": 42,
+  "station-kyiv-industrial": 132,
+  "station-lviv-center": 65,
+  "station-odesa-port": 95,
+  "station-kharkiv-residential": 38,
+  "station-carpathians-background": undefined,
+};
+
+export const mockStationsSummary: StationSummary[] = mockStations.map((station) => ({
+  id: station.id,
+  name: station.name,
+  type: station.type,
+  status: station.status,
+  coordinates: station.coordinates,
+  city: station.address.city,
+  currentAQI: fixedAQI[station.id],
+}));
 
 /**
  * Генерує дані про якість повітря для станції

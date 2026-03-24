@@ -11,6 +11,7 @@ export default function Header() {
 
         <div className="header-links">
           <Link href="/" className="header-link">Головна</Link>
+          <Link href="/monitoring" className="header-link">Моніторинг</Link>
           <Link href="/stations" className="header-link">Станції</Link>
           <Link href="/pollutants" className="header-link">Довідник</Link>
           <Link href="/about" className="header-link">Про проєкт</Link>
