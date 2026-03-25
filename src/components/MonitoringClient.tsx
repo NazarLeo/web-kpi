@@ -2,6 +2,13 @@
 
 import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import {
+  trackStationView,
+  trackMapInteraction,
+  trackChartView,
+  trackFilterApply,
+} from "@/lib/analytics";
 import {
   TimeSeriesChart,
   StationComparisonChart,
@@ -37,6 +44,21 @@ export default function MonitoringClient() {
 
   const handleStationSelect = useCallback((stationId: string | null) => {
     setSelectedStationId(stationId);
+    if (stationId) {
+      const station = mockStationsSummary.find((s) => s.id === stationId);
+      if (station) trackStationView(stationId, station.name);
+      trackMapInteraction("click", stationId);
+    }
+  }, []);
+
+  const handleFilterTypeChange = useCallback((value: string) => {
+    setFilterType(value);
+    trackFilterApply("type", value);
+  }, []);
+
+  const handleFilterStatusChange = useCallback((value: string) => {
+    setFilterStatus(value);
+    trackFilterApply("status", value);
   }, []);
 
   // Фільтрація станцій
@@ -113,7 +135,7 @@ export default function MonitoringClient() {
           <div className="monitoring-filters">
             <select
               value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
+              onChange={(e) => handleFilterTypeChange(e.target.value)}
               className="monitoring-select"
             >
               <option value="all">Всі типи</option>
@@ -125,7 +147,7 @@ export default function MonitoringClient() {
             </select>
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
+              onChange={(e) => handleFilterStatusChange(e.target.value)}
               className="monitoring-select"
             >
               <option value="all">Всі статуси</option>
@@ -148,11 +170,13 @@ export default function MonitoringClient() {
         <div className="monitoring-layout">
           <div className="monitoring-map-section">
             <div className="map-wrapper">
-              <StationMap
-                stations={filteredStations}
-                selectedStationId={selectedStationId}
-                onStationSelect={handleStationSelect}
-              />
+              <ErrorBoundary>
+                <StationMap
+                  stations={filteredStations}
+                  selectedStationId={selectedStationId}
+                  onStationSelect={handleStationSelect}
+                />
+              </ErrorBoundary>
             </div>
 
             {/* Список станцій під картою */}
@@ -231,6 +255,7 @@ export default function MonitoringClient() {
                 <TimeSeriesChart
                   measurements={stationChartData.measurements}
                   title="Зміна показників за 24 години"
+                  onView={() => trackChartView("timeseries")}
                 />
 
                 <PollutionPieChart
@@ -238,6 +263,7 @@ export default function MonitoringClient() {
                     (p) => ({ type: p.type, value: p.value })
                   )}
                   title="Структура забруднення"
+                  onView={() => trackChartView("pie")}
                 />
               </>
             ) : (
@@ -255,6 +281,7 @@ export default function MonitoringClient() {
             <StationComparisonChart
               stationsData={comparisonData}
               title="Порівняння станцій за AQI"
+              onView={() => trackChartView("comparison")}
             />
           </div>
         </div>

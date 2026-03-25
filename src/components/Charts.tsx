@@ -33,9 +33,11 @@ const POLLUTANT_COLORS: Record<string, string> = {
 export function TimeSeriesChart({
   measurements,
   title,
+  onView,
 }: {
   measurements: Measurement[];
   title?: string;
+  onView?: () => void;
 }) {
   const data = measurements.slice(-24).map((m) => {
     const entry: Record<string, string | number> = {
@@ -53,7 +55,7 @@ export function TimeSeriesChart({
   const pollutantTypes = measurements[0]?.data.pollutants.map((p) => p.type) ?? [];
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" onMouseEnter={onView}>
       {title && <h3 className="chart-title">{title}</h3>}
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -92,12 +94,14 @@ export function TimeSeriesChart({
 export function StationComparisonChart({
   stationsData,
   title,
+  onView,
 }: {
   stationsData: { name: string; aqi: number; color: string }[];
   title?: string;
+  onView?: () => void;
 }) {
   return (
-    <div className="chart-container">
+    <div className="chart-container" onMouseEnter={onView}>
       {title && <h3 className="chart-title">{title}</h3>}
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={stationsData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -129,9 +133,11 @@ export function StationComparisonChart({
 export function PollutionPieChart({
   pollutants,
   title,
+  onView,
 }: {
   pollutants: { type: string; value: number }[];
   title?: string;
+  onView?: () => void;
 }) {
   const data = pollutants.map((p) => ({
     name: p.type,
@@ -139,7 +145,7 @@ export function PollutionPieChart({
   }));
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" onMouseEnter={onView}>
       {title && <h3 className="chart-title">{title}</h3>}
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>

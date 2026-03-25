@@ -7,6 +7,7 @@ import {
   ErrorCode
 } from "@/types";
 import { mockStationsSummary } from "@/lib/mockData";
+import { logInfo, logError } from "@/lib/logger";
 
 /**
  * GET /api/stations
@@ -60,6 +61,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       },
     };
 
+    logInfo("GET /api/stations", { count: paginatedStations.length, page, type, status });
     return NextResponse.json(response, { 
       status: 200,
       headers: {
@@ -77,6 +79,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ApiRespons
       },
     };
 
+    logError("GET /api/stations failed", error);
     return NextResponse.json(errorResponse, { status: 500 });
   }
 }
