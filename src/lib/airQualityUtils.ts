@@ -17,10 +17,10 @@ export function getAirQualityLevel(aqi: number): AirQualityLevel {
  */
 export function getAirQualityColor(level: AirQualityLevel): string {
   const colors: Record<AirQualityLevel, string> = {
-    [AirQualityLevel.GOOD]: "#10b981",
-    [AirQualityLevel.MODERATE]: "#f59e0b",
-    [AirQualityLevel.UNHEALTHY_SENSITIVE]: "#f97316",
-    [AirQualityLevel.UNHEALTHY]: "#ef4444",
+    [AirQualityLevel.GOOD]: "#047857",           // was #10b981 — white contrast 2.4:1 → 5.0:1
+    [AirQualityLevel.MODERATE]: "#b45309",        // was #f59e0b — white contrast 2.1:1 → 4.7:1
+    [AirQualityLevel.UNHEALTHY_SENSITIVE]: "#c2410c", // was #f97316 — white contrast 2.6:1 → 4.9:1
+    [AirQualityLevel.UNHEALTHY]: "#dc2626",       // was #ef4444 — white contrast 3.6:1 → 4.7:1
     [AirQualityLevel.VERY_UNHEALTHY]: "#991b1b",
     [AirQualityLevel.HAZARDOUS]: "#7f1d1d",
   };

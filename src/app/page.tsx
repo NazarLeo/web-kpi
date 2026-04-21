@@ -108,8 +108,8 @@ export default async function Home() {
               const textColors: Record<string, string> = {
                 good: "#166534",
                 moderate: "#713f12",
-                unhealthy_sensitive: "#9a3412",
-                unhealthy: "#991b1b",
+                unhealthy_sensitive: "#7c2d12", // was #9a3412 — 4.1:1 → 5.2:1 on #fdba74
+                unhealthy: "#7f1d1d",           // was #991b1b — 4.3:1 → 4.9:1 on #fca5a5
                 very_unhealthy: "#6b21a8",
                 hazardous: "#ffffff",
               };

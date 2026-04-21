@@ -9,11 +9,20 @@ import {
   trackChartView,
   trackFilterApply,
 } from "@/lib/analytics";
-import {
-  TimeSeriesChart,
-  StationComparisonChart,
-  PollutionPieChart,
-} from "@/components/Charts";
+
+// Lazy loading для Recharts — виключаємо бібліотеку (~180 КБ) з початкового бандлу
+const TimeSeriesChart = dynamic(
+  () => import("@/components/Charts").then((m) => ({ default: m.TimeSeriesChart })),
+  { loading: () => <div className="chart-loading"><p>Завантаження графіка...</p></div> }
+);
+const StationComparisonChart = dynamic(
+  () => import("@/components/Charts").then((m) => ({ default: m.StationComparisonChart })),
+  { loading: () => <div className="chart-loading"><p>Завантаження графіка...</p></div> }
+);
+const PollutionPieChart = dynamic(
+  () => import("@/components/Charts").then((m) => ({ default: m.PollutionPieChart })),
+  { loading: () => <div className="chart-loading"><p>Завантаження графіка...</p></div> }
+);
 import {
   mockStationsSummary,
   mockStations,

@@ -50,7 +50,7 @@ export default async function StationPage({ params }: PageProps) {
 
   return (
     <div className="container section">
-      <Link href="/stations" style={{ fontSize: "0.875rem", color: "#666" }}>
+      <Link href="/stations" style={{ fontSize: "0.875rem", color: "#ffffff" }}>
         ← Назад до станцій
       </Link>
 
@@ -58,7 +58,7 @@ export default async function StationPage({ params }: PageProps) {
         <h1 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "0.5rem" }}>
           {station.name}
         </h1>
-        <p style={{ fontSize: "1.125rem", color: "#666", marginBottom: "1.5rem" }}>
+        <p style={{ fontSize: "1.125rem", color: "#ffffff", marginBottom: "1.5rem" }}>
           {station.city}
         </p>
 

@@ -309,7 +309,7 @@ body {
 
 /* Link */
 .link {
-  color: var(--primary);
+  color: white;
   text-decoration: none;
   transition: opacity 0.2s;
 }
