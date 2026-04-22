@@ -6,7 +6,7 @@ export default function Header() {
       <nav className="header-nav">
         <Link href="/" className="header-logo">
           <div className="header-logo-icon">Е</div>
-          <span className="header-logo-text">Екомоніторинг ТЕСТ АВТОДЕПЛОЮ</span>
+          <span className="header-logo-text">Екомоніторинг</span>
         </Link>
 
         <div className="header-links">
